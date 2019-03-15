@@ -3,147 +3,159 @@ package com.yychat.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
-public class FriendList  extends JFrame implements ActionListener{//容器
-	//成员变量
+public class FriendList extends JFrame implements ActionListener,MouseListener{
+    
 	CardLayout cardLayout;
-	
-	
-	//第一个卡片
-	//北部
+	//1
 	JPanel myFriendPanel;
-	
 	
 	JButton myFriendButton;
 	
-	//中部
-	JScrollPane myFriendListJScrollPane;//滚动条
-	JPanel myFriendListJPanel;
-	public static final int MYFRIENDCOUNT=51;
-
-
-	private static final String LEFT = null;
-
-
-	JLabel[] myFriendJLabel=new JLabel[MYFRIENDCOUNT];
+	JScrollPane myFriendListJScrollPane;
+	JPanel myFriendListJpanel;
+	static final int MYFRIENDCUNT=51;
+	JLabel[] myFriendJLabel=new JLabel[MYFRIENDCUNT];
 	
-	//南部
 	JPanel myStrangerBlackListPanel;
 	JButton myStrangerButton;
-	JButton blackListButton;
+	JButton myBlackListButton;
+	//2
+	
+	JPanel myStrangerPanel;
+	//(1)
+	
+	JPanel myFriendStrangerPanel;
+	JButton myFriendButton1;
+	JButton myStrangerButton1;
+	
+	//(2)
+	JScrollPane myStangerJScrollPane;
+	JPanel myStangerJpanel1;
+	static final int MYSTANGERDCUNT=21;
+	JLabel[] myStangerJLabel=new JLabel[MYSTANGERDCUNT];
+	
+	//(3)
+	JButton myBlackListButton1;
 	
 	
-	//第二个卡片
-			JPanel myStrangerPanel;
-			//北部
-			JPanel myFriendStrangerPanel;
-			JButton myStrangerButton1;
-			JButton myFriendButton1;
-			
-			//中部
-			JScrollPane myStrangerListJScrollPane;
-			JPanel myStrangerListJPanel;
-			public static final int MYCOUNT=51;
-
-
-			public static final String LEFT1 = null;
-			JLabel[] myStrangerJLabel=new JLabel[MYCOUNT];
-			
-			JPanel myStrangerBlackListPanel1;
-			
-			//南部
-			JButton blackListButton1;
-			
-	
-	public FriendList(){
-		//创建第一张卡片
-		myFriendPanel =new JPanel(new BorderLayout());
-  		System.out.println(myFriendPanel.getLayout());
-  		 
-  		
-  		//北部
-  		myFriendButton=new JButton("我的好友");
-  		myFriendPanel.add(myFriendButton,"North");
-  		
-  		
-  	    //中部
-  		myFriendListJPanel=new JPanel(new GridLayout(MYFRIENDCOUNT-1,1));
-		for(int i=1;i<MYFRIENDCOUNT;i++){
-			myFriendJLabel[i]=new JLabel(i+"",new ImageIcon("images/yy2.gif"),JLabel.LEFT);
-			myFriendListJPanel.add(myFriendJLabel[i]);
+	String userName;
+	public FriendList(String userName){
+		this.userName=userName;
+		myFriendPanel=new JPanel(new BorderLayout());
+		System.out.println(myFriendPanel.getLayout());
+		
+		myFriendButton=new JButton("我的好友");
+		myFriendPanel.add(myFriendButton,"North");
+		
+		
+		myFriendListJpanel=new JPanel(new GridLayout(50,1));
+		for(int i=1;i<=MYFRIENDCUNT-1;i++){
+			myFriendJLabel[i]=new JLabel(i+"",new ImageIcon("images/yy0.gif"),JLabel.LEFT);
+			myFriendJLabel[i].addMouseListener(this);
+			myFriendListJpanel.add(myFriendJLabel[i]);
 		}
 		
-		
-		myFriendListJScrollPane=new JScrollPane(myFriendListJPanel);
+			
+			myStrangerBlackListPanel=new JPanel(new GridLayout(2,1));
+			myStrangerButton=new JButton("陌生人");
+			myStrangerButton.addActionListener(this);
+			myBlackListButton=new JButton("黑名单");
+			myStrangerBlackListPanel.add(myStrangerButton);
+			myStrangerBlackListPanel.add(myBlackListButton);	
+			myFriendPanel.add(myStrangerBlackListPanel,"South");
+			//2
+			myStrangerPanel=new JPanel(new BorderLayout());
+			//1
+			myFriendStrangerPanel=new JPanel(new GridLayout(2,1));
+			myFriendButton1=new JButton("我的好友");
+			myFriendButton1.addActionListener(this);
+			myStrangerButton1=new JButton("我的陌生人");
+			myFriendStrangerPanel.add(myFriendButton1);
+			myFriendStrangerPanel.add(myStrangerButton1);
+			myStrangerPanel.add(myFriendStrangerPanel,"North");
+			//(2)
+			myStangerJpanel1=new JPanel(new GridLayout(20,1));
+			for(int j=1;j<=MYSTANGERDCUNT-1;j++){
+				myStangerJLabel[j]=new JLabel(j+"",new ImageIcon("images/yy1.gif"),JLabel.LEFT);
+				myStangerJLabel[j].addMouseListener(this);
+				myStangerJpanel1.add(myStangerJLabel[j]);
+			}
+			
+			//(3)
+			myBlackListButton1=new JButton("黑名单");
+			myStrangerPanel.add(myBlackListButton1,"South");
+			
+			
+			
+			cardLayout=new CardLayout();
+			this.setLayout(cardLayout);
+			this.add(myFriendPanel,"1");
+			this.add(myStrangerPanel,"2");
+			
+//		myFriendListJScrollPane=new JScrollPane();
+//		myFriendListJScrollPane.add(myFriendListJpanel);
+		myFriendListJScrollPane=new JScrollPane(myFriendListJpanel);
 		myFriendPanel.add(myFriendListJScrollPane);
 		
+		myStangerJScrollPane=new JScrollPane(myStangerJpanel1);
+		myStrangerPanel.add(myStangerJScrollPane);
 		
-		
-		//南部
-		myStrangerBlackListPanel=new JPanel(new GridLayout(2,1));
-		myStrangerButton=new JButton("我的陌生人");
-		myStrangerButton.addActionListener(this);//事件监听
-		blackListButton=new JButton("黑名单");
-		myStrangerBlackListPanel.add(myStrangerButton);
-		myStrangerBlackListPanel.add(blackListButton);
-		myFriendPanel.add(myStrangerBlackListPanel,"South");
-		
-		
-		
-		//创建第二个卡片
-		myStrangerPanel=new JPanel(new BorderLayout());//布局，边界布局
-		//北部
-		myFriendStrangerPanel=new JPanel(new GridLayout(2,1));
-	    myFriendButton1=new JButton("我的好友");
-	    myFriendButton1.addActionListener(this);//事件监听
-	    myStrangerButton1=new JButton("我的陌生人");
-	    myFriendStrangerPanel.add(myFriendButton1);
-	    myFriendStrangerPanel.add(myStrangerButton1);
-	    myStrangerPanel.add(myFriendStrangerPanel, "North");
-	    
-	    
-	    
-		//中部
-		myStrangerListJPanel=new JPanel(new GridLayout(MYCOUNT-1,1));
-		for(int i=1;i<MYCOUNT;i++){
-			myStrangerJLabel[i]=new JLabel(i+"",new ImageIcon("images/YY1.gif"),JLabel.LEFT);
-			myStrangerListJPanel.add(myStrangerJLabel[i]);
-		}
-		
-		
-		myStrangerListJScrollPane=new JScrollPane(myStrangerListJPanel);
-		myStrangerPanel.add(myStrangerListJScrollPane);
-		
-		
-		//南部
-		blackListButton1=new JButton("黑名单");
-		myStrangerPanel.add(blackListButton1,"South");
-		
-		
-		//添加两个卡片
-		cardLayout=new CardLayout();
-		this.setLayout(cardLayout);
-		this.add(myFriendPanel,"1");
-		this.add(myStrangerPanel,"2");
 		this.setSize(150,500);
+		this.setTitle(userName+"的好友列表");
+		this.setIconImage(new ImageIcon("images/yy3.gif").getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null); 
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+	
+		
 	}
-
 	public static void main(String[] args) {
-		FriendList friendList=new FriendList();
 		// TODO Auto-generated method stub
-
+//		FriendList friendList=new FriendList();
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==myStrangerButton) cardLayout.show(this.getContentPane(), "2");
-		if(e.getSource()==myFriendButton1) cardLayout.show(this.getContentPane(), "1");
+		if(e.getSource()== myStrangerButton) cardLayout.show(this.getContentPane(),"2");
+		if(e.getSource()== myFriendButton1) cardLayout.show(this.getContentPane(),"1");
+	}
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if(arg0.getClickCount()==2){
+			JLabel jlbl=(JLabel)arg0.getSource();
+			String receiver=jlbl.getText();
+			new FriendChat(this.userName,receiver);
+		}
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		JLabel jlbl1=(JLabel)arg0.getSource();
+		jlbl1.setForeground(Color.red);
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		JLabel jlbl1=(JLabel)arg0.getSource();
+		jlbl1.setForeground(Color.black);
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 	}
 
-}
+
+
+

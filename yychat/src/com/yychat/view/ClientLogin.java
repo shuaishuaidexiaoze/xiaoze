@@ -1,38 +1,29 @@
 package com.yychat.view;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.yychat.controller.ClientConnetion;
+import com.yychat.model.Message;
 import com.yychat.model.User;
 
 
 public class ClientLogin extends JFrame implements ActionListener{
-
-	JLabel jlbl1;//beibu
+	//北部组件
+	JLabel jlbl1;
 	
-	
-	JTabbedPane jtp1;//zhongbu xuanxiangzuka
+	//中部组件
+	JTabbedPane jtp1;
 	JPanel jp2,jp3,jp4;
 	JLabel jlbl2,jlbl3,jlbl4,jlbl5;
-	JTextField jtf1;//wenbenkuang
-	JPasswordField jpf1;//mimakuang
+	JTextField jtf1;
+	JPasswordField jpf1;
 	JButton jb4;
 	JCheckBox jcb1,jcb2;
-	
-	JButton jb1,jb2,jb3;//nanbu
+	//南部组件
+	JButton jb1,jb2,jb3;
 	JPanel jp1;
 	
 	public ClientLogin(){
@@ -59,7 +50,6 @@ public class ClientLogin extends JFrame implements ActionListener{
 		
 		this.add(jtp1);
 		
-		//chuanjiannanbujujian
 		jb1=new JButton(new ImageIcon("images/denglu.gif"));
 		jb1.addActionListener(this);
 		jb2=new JButton(new ImageIcon("images/zhuce.gif"));
@@ -76,8 +66,7 @@ public class ClientLogin extends JFrame implements ActionListener{
 		
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ClientLogin cl=new ClientLogin();
+		ClientLogin clientLogin=new ClientLogin();
 
 	}
 	@Override
@@ -88,14 +77,15 @@ public class ClientLogin extends JFrame implements ActionListener{
 			User user=new User();
 			user.setUserName(userName);
 			user.setPassWord(passWord);
-			
-			new ClientConnetion().loginValidate(user);
-			
-			
-			new FriendList(userName);
-			this.dispose();
+			//密码验证，密码是123456的话验证成功
+			Message mess=new ClientConnetion().loginValidate(user);
+			if(mess.getMessageType().equals(Message.message_LoginSuccess)){
+				new FriendList(userName);
+				this.dispose();
+			}else{
+				JOptionPane.showMessageDialog(this, "密码错误");
 			}
+						
 		}
-		
-		
 	}
+}

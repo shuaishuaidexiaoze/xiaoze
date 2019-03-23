@@ -1,0 +1,48 @@
+package controller;
+
+
+import java.io.*;
+import java.net.*;
+
+import com.yychat.model.User;
+
+public class StartServer {
+	
+	ServerSocket ss;
+	Socket s;
+	public StartServer(){
+
+			try {
+				ss=new ServerSocket(3456);
+				System.out.println("服务器已经启动，监听3456端口");
+				s=ss.accept();
+				System.out.println(s);//输出连接Socket对象
+				
+				//字节输入流包装成对象输入流
+				ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
+				User user=(User)ois.readObject();
+				System.out.println(user.getUserName());
+				System.out.println(user.getPassWord());
+				
+				//Server端验证密码是否是“123456”
+				if(user.getPassWord().equals("123456"));{//不能用“==”,对象比较
+					//消息传递，创建一个Message对象
+					
+				}
+				else{
+					
+				}
+				
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+	
+	}
+	
+	
+	public static void main(String[] args) {
+		
+
+	}
+
+}

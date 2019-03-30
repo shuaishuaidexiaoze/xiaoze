@@ -3,8 +3,9 @@ package com.yychat.model;
 import java.io.Serializable;
 
 public class User implements Serializable{
-	private String userName;//成员变量
-	private String passWord;
+	private String userName;
+	private String Password;
+	
 	
 	
 	public String getUserName() {
@@ -13,13 +14,15 @@ public class User implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getPassWord() {
-		return passWord;
+	public String getPassword() {
+		return Password;
 	}
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setPassword(String password) {
+		Password = password;
 	}
+	
 	
 	
 
+	
 }

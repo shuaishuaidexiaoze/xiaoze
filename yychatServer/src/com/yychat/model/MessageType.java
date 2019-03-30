@@ -1,7 +1,7 @@
 package com.yychat.model;
 
 public interface MessageType {
-	String message_LoginSuccess="1";//×Ö·û´®³£Á¿
-	String message_LoginFailure="0";
-	String message_Common="2";
+	public static String message_LoginFailure="0";
+	public static String message_LoginSucess="1";
+	public static String message_Common="2";
 }

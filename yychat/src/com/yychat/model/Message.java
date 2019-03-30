@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Message implements Serializable,MessageType{
 	private String sender;
 	private String receiver;
+	private String messagetype;
 	private String content;
-	private String messageType;
 	
 	public String getContent() {
 		return content;
@@ -26,13 +26,13 @@ public class Message implements Serializable,MessageType{
 	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
-	public String getMessageType() {
-		return messageType;
+	public String getMessagetype() {
+		return messagetype;
 	}
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setMessagetype(String messagetype) {
+		this.messagetype = messagetype;
 	}
 	
 	
-	
+
 }
